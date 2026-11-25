@@ -25,6 +25,8 @@ Graded by an independent agent that started with no context from the skill's dev
 | hexyl | cli-no-history | — | 5 / 5 |
 | greenfield | plan-greenfield | — | 5 / 7 |
 
+Each score counts the `expected_behavior` lines the eval had when that run was graded. Lines added since (bug recall, among others) haven't been graded yet, so some files now have more lines than the totals above.
+
 Lines a saved report can't show (the path given in chat, `GUARDRAILS.md` left unedited) count as "can't tell", not as passes.
 
 **What the grading found**
