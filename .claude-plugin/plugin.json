@@ -1,6 +1,6 @@
 {
   "name": "hinedy-skills",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Agent skills by hinedy, starting with codebase-guardrails: the architecture decisions that make recurring bug classes impossible.",
   "author": {
     "name": "hinedy",
