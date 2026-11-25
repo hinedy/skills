@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- Space Mono is loaded from Google Fonts, so rendering needs network access. -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=block" rel="stylesheet">
+<style>body{margin:0;background:#f9f6f2}canvas{display:block}</style>
+</head>
+<body>
+<canvas id="out" width="1024" height="1024"></canvas>
+<script>
+// The plugin icon: a mouse pointer drawn in ASCII with an ordered dither,
+// on the palette of hinedy.vercel.app, with crisp orange click marks.
+const PAPER = '#f9f6f2', INK = '#17110d', ACCENT = '#ed5f18', GRID_DOT = 'rgba(105,98,91,0.40)';
+const RAMP = [' ', '.', '-', '+', '#']; // the same ramp as the portfolio's ASCII portrait
+const BAYER = [[0,8,2,10],[12,4,14,6],[3,11,1,9],[15,7,13,5]].map(r => r.map(v => (v + 0.5) / 16));
+const N = 24; // characters per side
+
+function mask(draw) {
+  const c = document.createElement('canvas');
+  c.width = c.height = N * 8;
+  const x = c.getContext('2d');
+  x.scale(N * 8 / 1024, N * 8 / 1024);
+  x.fillStyle = '#000';
+  draw(x);
+  return x.getImageData(0, 0, c.width, c.height).data;
+}
+
+// Share of one cell (8x8 samples) covered by the mask.
+function coverage(d, i, j) {
+  let s = 0;
+  for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) s += d[((j * 8 + y) * N * 8 + (i * 8 + x)) * 4 + 3];
+  return s / (64 * 255);
+}
+
+function pointer(x) {
+  const s = 38, ox = 330, oy = 170;
+  const p = [[0,0],[0,17],[4,13.2],[7,20],[10,18.8],[7.2,12.2],[12.4,12.2]];
+  x.beginPath();
+  p.forEach(([a, b], k) => k ? x.lineTo(ox + a * s, oy + b * s) : x.moveTo(ox + a * s, oy + b * s));
+  x.closePath();
+  x.fill();
+}
+
+function clickMarks(o) {
+  o.lineWidth = 14; o.lineCap = 'round'; o.strokeStyle = ACCENT;
+  for (const [a, b, c, d] of [[290,130,240,80],[250,190,180,190],[330,105,330,40]]) {
+    o.beginPath(); o.moveTo(a, b); o.lineTo(c, d); o.stroke();
+  }
+}
+
+document.fonts.load('700 40px "Space Mono"').then(() => {
+  const body = mask(pointer);
+  const o = document.getElementById('out').getContext('2d');
+  o.fillStyle = PAPER; o.fillRect(0, 0, 1024, 1024);
+  const cell = 1024 / N;
+  o.font = `700 ${cell * 1.25}px "Space Mono"`; o.textAlign = 'center'; o.textBaseline = 'middle';
+  for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+    const k = coverage(body, i, j);
+    const shade = 0.62 + 0.38 * ((i + j) / (2 * N)); // lit from the top-left
+    const [density, color] = k > 0.05 ? [Math.min(1, k * shade * 1.1), INK] : [0.05, GRID_DOT];
+    const level = Math.min(RAMP.length - 1, Math.floor(density * (RAMP.length - 1) + BAYER[j % 4][i % 4]));
+    if (RAMP[level] === ' ') continue;
+    o.fillStyle = color;
+    o.fillText(RAMP[level], i * cell + cell / 2, j * cell + cell / 2 + cell * 0.05);
+  }
+  clickMarks(o);
+  document.title = 'done';
+});
+</script>
+</body>
+</html>

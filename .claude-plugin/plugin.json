@@ -1,0 +1,23 @@
+{
+  "name": "hinedy-skills",
+  "version": "0.1.0",
+  "description": "Agent skills by hinedy, starting with codebase-guardrails: the architecture decisions that make recurring bug classes impossible.",
+  "author": {
+    "name": "hinedy",
+    "url": "https://github.com/hinedy"
+  },
+  "homepage": "https://github.com/hinedy/skills",
+  "repository": "https://github.com/hinedy/skills",
+  "license": "MIT",
+  "icon": "./.claude-plugin/icon.png",
+  "keywords": [
+    "architecture",
+    "bug-classes",
+    "audit",
+    "guardrails",
+    "code-quality"
+  ],
+  "skills": [
+    "./skills/codebase-guardrails"
+  ]
+}

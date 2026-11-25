@@ -1,0 +1,17 @@
+{
+  "name": "hinedy",
+  "owner": {
+    "name": "hinedy",
+    "url": "https://github.com/hinedy"
+  },
+  "description": "Agent skills by hinedy.",
+  "plugins": [
+    {
+      "name": "hinedy-skills",
+      "source": "./",
+      "description": "Agent skills by hinedy, starting with codebase-guardrails: the architecture decisions that make recurring bug classes impossible.",
+      "category": "engineering",
+      "keywords": ["architecture", "bug-classes", "audit", "guardrails", "code-quality"]
+    }
+  ]
+}
