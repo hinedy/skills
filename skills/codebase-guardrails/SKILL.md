@@ -46,7 +46,7 @@ Apply the catalog's **Reading the history** rules (drops, sweeps, reverts, when 
 - **polish**: see the catalog's last section.
 - **dropped**: not a fix, or (scoped audits) a real fix outside the scope; still name security fixes.
 
-Keep a tally outside the repo, one `hash bucket guardrail` line per item (guardrail blank for one-off, polish and dropped).
+Keep a tally outside the repo, one `hash date bucket guardrail` line per item (a sweep takes its last commit's date; guardrail blank for one-off, polish and dropped). The dates give the report its Recent column.
 Why: grouping by feature hides the pattern that the guardrail closes.
 **Done when** each class has a count and 2–4 example subjects, and classes plus one-off plus polish plus dropped add up to the total.
 

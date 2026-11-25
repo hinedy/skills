@@ -25,13 +25,14 @@ Two modes, picked from your request:
 
 Both end with a ranked table:
 
-| Rank | ID  | Guardrail                                     | Verdict | Cost | Prevented | Signal | Fit          | Value |
-| :--: | --- | --------------------------------------------- | ------- | :--: | :-------: | :----: | ------------ | :---: |
-|  1   | G23 | Text and layout are ready for other languages | Missing |  1   |     0     |   6    | raised ×2    | 12.0  |
-|  2   | G3  | Invalid calls can't be written                | Partial |  1   |     9     |   —    | unchanged ×1 |  9.0  |
-|  3   | N1  | Money is stored as integer minor units        | Missing |  2   |    12     |   —    | unchanged ×1 |  6.0  |
+| Rank | ID  | Guardrail                                     | Verdict | Cost | Prevented | Recent | Signal | Fit          | Severity | Value |
+| :--: | --- | --------------------------------------------- | ------- | :--: | :-------: | :----: | :----: | ------------ | :------: | :---: |
+|  1   | G12 | Writes are safe to retry                      | Missing |  2   |     6     |   2    |   —    | raised ×2    |    ×2    | 16.0  |
+|  2   | N1  | Money is stored as integer minor units        | Missing |  2   |    12     |   3    |   —    | unchanged ×1 |    ×2    | 15.0  |
+|  3   | G3  | Invalid calls can't be written                | Partial |  1   |     9     |   4    |   —    | unchanged ×1 |    ×1    | 13.0  |
+|  4   | G23 | Text and layout are ready for other languages | Missing |  1   |     0     |   —    |   6    | raised ×2    |    ×1    | 12.0  |
 
-**Prevented** counts past fixes the guardrail would have stopped. **Signal** counts files showing the guardrail's warning signs, only for guardrails the roadmap raises and that have no history yet; it's capped so it can't outrank real recurring bugs. **N1** is a guardrail the skill wrote because no catalog entry covered that class.
+**Prevented** counts past fixes the guardrail would have stopped, and **Recent** counts those from the newest third of the history, so a class still landing outranks one that stopped. **Severity** doubles a class with security, data-loss or wrong-number bugs and halves one that is only cosmetic. **Signal** counts files showing the guardrail's warning signs, only for guardrails the roadmap raises and that have no history yet; it's capped so it can't outrank real recurring bugs. **N1** is a guardrail the skill wrote because no catalog entry covered that class.
 
 The ranked changes repeat from run to run; the live bugs are a sample. In testing, two runs on the same repo shared about 1 in 6 of the bugs they found, so re-run or re-check before treating the list as complete.
 
@@ -39,7 +40,7 @@ Right after the table come the live bugs it found (security bugs first) and the 
 
 ## How it works
 
-A **bug class** is two or more fixes with one root cause. Each class points to a missing **guardrail**: a rule that lint, the type checker, CI or the structure of the code (a constraint, an enum) enforces. The skill gathers evidence from fix commits, an issue tracker or the code itself, so it works on squashed repos and greenfield projects too. It maps classes to guardrails, scores each on a 1–5 cost scale, and raises or lowers it against your roadmap. It then translates the rule into your stack's own mechanism, from current docs, and recommends the light version unless the evidence shows the heavy one pays.
+A **bug class** is two or more fixes with one root cause. Each class points to a missing **guardrail**: a rule that lint, the type checker, CI or the structure of the code (a constraint, an enum) enforces. The skill gathers evidence from fix commits, an issue tracker or the code itself, so it works on squashed repos and greenfield projects too. It maps classes to guardrails, weighs each class by how recently it recurred and how much harm it does, scores each guardrail on a 1–5 cost scale, and raises or lowers it against your roadmap. It then translates the rule into your stack's own mechanism, from current docs, and recommends the light version unless the evidence shows the heavy one pays.
 
 ## The guardrails
 

@@ -21,11 +21,12 @@
     "Gives every applicable guardrail a verdict with path:line, a grep count or a config line as evidence",
     "Rates a guardrail Met only when lint, the type checker, CI or the code's structure enforces it everywhere (or it is a decision guardrail followed everywhere); followed-but-unenforced is Convention, and Missing when violations outnumber compliant sites",
     "Gives a signal only to raised guardrails with no history that are not Met; every other zero-history row shows — and a value of 0",
-    "Every ranked row's value equals (prevented or signal) x fit weight / cost, ties broken by higher prevented, then lower cost, then G before N",
+    "Every ranked row's value equals (prevented + recent, or signal) x fit weight x severity / cost, ties broken by higher prevented + recent, then lower cost, then G before N; the Evidence line gives the recent cut-off date",
     "Follows REPORT-TEMPLATE.md section order: Live bugs (security first) and Top three changes right after the Ranked table, then Details, N/A and New guardrails",
     "Sorts Met rows after every other verdict and takes the top three changes only from rows that are not Met",
     "Does not edit GUARDRAILS.md",
-    "Reports at least half of the known_bugs for its repo (recall; statuses say how sure each bug is, and read-from-code bugs may turn out wrong)"
+    "Reports at least half of the known_bugs for its repo (recall; statuses say how sure each bug is, and read-from-code bugs may turn out wrong)",
+    "Gives severity ×2 to classes with a security, data-loss or wrong-number fix, and ×0.5 only to classes of layout, styling, copy or docs text"
   ],
   "known_bugs": {
     "maybe": [
