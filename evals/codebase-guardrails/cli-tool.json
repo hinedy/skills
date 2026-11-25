@@ -11,7 +11,7 @@
   ],
   "files": [],
   "expected_behavior": [
-    "Marks G5, G8, G9, G22 and G25 as N/A, each with a one-line reason (terminal prompts aren't dialogs; completions aren't a client)",
+    "Marks G5, G8, G9, G22, G25 and G31 as N/A, each with a one-line reason (terminal prompts aren't dialogs; completions aren't a client)",
     "Applies G12 to remote fetches, since its Applies when covers external calls, and checks their timeouts",
     "Applies G27 to the released binaries and G28 to the docs site",
     "Keeps G16 applicable, since CLI output renders user data",

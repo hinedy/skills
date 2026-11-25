@@ -12,7 +12,7 @@
     "Does not raise G25, since no customer needs different behavior yet",
     "Recommends the lightest version of each guardrail and names the traps to avoid",
     "Omits verdicts (the Scoreboard and the Verdict column), the Evidence header line, and Evidence, Gap and Live bugs parts",
-    "Ranks the Required rows (G5 and G22, since customers edit roles) above every other row",
-    "Adds a new guardrail for a roadmap risk the catalog lacks (e.g. tenant data isolation), citing the roadmap line"
+    "Ranks the Required rows (G5 and G22, since customers edit roles, and G31, since customers share one store) above every other row",
+    "Applies G31 (tenant data isolation) and names its light version (scoping in the store or one data-access layer) and its trap (a database per tenant at launch)"
   ]
 }

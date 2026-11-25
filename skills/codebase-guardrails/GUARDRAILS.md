@@ -36,6 +36,7 @@ Architecture decisions that make whole **bug classes** impossible to write. Rule
 | G28 | Code in the docs compiles, and links resolve, in CI         | Docs with code examples or links                |
 | G29 | Each output format has one escaper                          | Output built for HTML, shell, regex, SQL, files |
 | G30 | Updates write only the fields they change                   | Existing records are updated                    |
+| G31 | Tenant data is scoped where it's stored                     | Two or more customers share one store           |
 
 ## Fields
 
@@ -84,7 +85,7 @@ Each guardrail has these fields:
 - **A class that fits two guardrails.** Map it to the one whose Rule names the root cause; then the one whose Code line you can cite in this repo; then the lower ID.
 - **A trigger already reached.** Use the cost that applies after the trigger; the fit stays unchanged.
 - **(decision) in the index.** Nothing can lint these; step 5 rates them Met when the rule is followed everywhere.
-- **IDs out of order.** G29 and G30 were added later; they're filed under their topic sections (A and D) so earlier IDs stay stable.
+- **IDs out of order.** G29, G30 and G31 were added later; they're filed under their topic sections (A, D and B) so earlier IDs stay stable.
 
 ---
 
@@ -156,6 +157,19 @@ Each guardrail has these fields:
 **Check.** Count the lists. Is there a test that runs every role against every entry point?
 **Cost.** 2. **Required** once roles vary per customer or become editable.
 **Trap (4).** A policy engine (rules, conditions, inheritance) before roles are dynamic. It's a second authority that drifts from the server.
+
+---
+
+### G31. Tenant data is scoped where it's stored
+
+**Rule.** Tenant-owned data is scoped in one place: the store (row-level security, the tenant key in unique and foreign keys) or one data-access layer (a scoped repository, a default scope), never in each query. The tenant comes from the authenticated session, never from client input. Jobs, caches, files and search indexes carry the tenant key.
+**Why.** A query that forgets its tenant filter shows one customer's data to another, and it passes review because the missing line is invisible. G24 covers per-tenant settings and G9 covers session state; this rule covers data access.
+**Applies when.** Two or more customers (organizations, workspaces, households, accounts) share one store.
+**History.** "scope X to the current org", "user could see another workspace's Y", "add group check to Z".
+**Code.** Queries on tenant-owned tables that bypass the scoping layer; a tenant id read from request parameters or the body; cache keys or file paths without the tenant key.
+**Check.** Is scoping enforced by the store or one layer? Count tenant-owned queries that bypass it. Is there a test that requests each endpoint as another tenant and expects not-found?
+**Cost.** 2 while tenant-owned tables are young; 3 once they hold production data. **Required** once two or more customers share one store.
+**Trap (4).** A database or schema per tenant at launch. Migrations, pooling and reporting multiply per tenant before any customer needs physical separation.
 
 ---
 

@@ -17,7 +17,7 @@ Plan mode reports in chat and uses the structure below with these changes:
 
 - No verdicts: drop the Scoreboard, the Verdict column, the Evidence header line, each Details block's Evidence and Gap lines, and the Live bugs section. Put the stack-specific form on the Fit line.
 - In greenfield, guardrails that apply "Always" keep an unchanged fit unless a roadmap line names their concern.
-- **Required first.** Rows the catalog marks **Required** for this roadmap (G5 and G22 when roles vary per customer or become editable) rank above every other row. Why: with no history, many rows tie, and Required is the catalog's own statement of what can't wait.
+- **Required first.** Rows the catalog marks **Required** for this roadmap (G5 and G22 when roles vary per customer or become editable; G31 when two or more customers share one store) rank above every other row. Why: with no history, many rows tie, and Required is the catalog's own statement of what can't wait.
 - Use the cost of the version you'd recommend.
 - New guardrails may come from the roadmap: a risk the roadmap creates that no catalog entry covers gets an N row, citing the roadmap line.
 

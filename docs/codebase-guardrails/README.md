@@ -52,6 +52,7 @@ A **bug class** is two or more fixes with one root cause. Each class points to a
 
 **B. Access**
 - G5. One capability manifest, decided by the authority
+- G31. Tenant data is scoped where it's stored
 
 **C. Lifecycle and state**
 - G6. Each error is reported exactly once
