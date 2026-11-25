@@ -54,6 +54,10 @@
       {
         "bug": "Security: session handling after a credential change (G9; details withheld until disclosed)",
         "status": "read from code"
+      },
+      {
+        "bug": "app/models/budget.rb:114 — Budget#current? uses Date.today (server zone) while requests run in the family's time zone",
+        "status": "read from code, found by the baseline run (no skill), checked by the grader"
       }
     ],
     "healthchecks": [
@@ -71,7 +75,19 @@
       },
       {
         "bug": "Security: a lost-update race on security-relevant counters (G30; details withheld until disclosed)",
-        "status": "read from code"
+        "status": "read from code; also found by the baseline"
+      },
+      {
+        "bug": "Security: malformed inbound email can crash two parsing paths (G4; details withheld until disclosed)",
+        "status": "read from code, found by the baseline run (no skill), checked by the grader"
+      },
+      {
+        "bug": "Security: user text marked safe in a notification template (G29; details withheld until disclosed)",
+        "status": "read from code, found by the skill re-run, checked by the grader"
+      },
+      {
+        "bug": "webhook integration — $JSON takes the current status while $STATUS takes flip.new_status",
+        "status": "read from code, found by the skill re-run, checked by the grader"
       }
     ]
   }

@@ -33,6 +33,10 @@
       {
         "bug": "internal/flags/flags.go:120 — an invalid .taskrc.yml field silently discards the whole config",
         "status": "reproduced"
+      },
+      {
+        "bug": "compiler.go:161,187 — the sh: result cache is keyed only on the command text, so a task can get another task's dir or variable values",
+        "status": "reproduced by the baseline run (no skill); code checked by the grader"
       }
     ]
   }

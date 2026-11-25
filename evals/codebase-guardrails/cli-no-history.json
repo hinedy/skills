@@ -17,6 +17,47 @@
     "With fewer than 20 fix commits and no issue tracker, uses each guardrail's Code line as evidence and says so",
     "Checks G4 against argv and environment-variable reads",
     "Does not recommend any UI-specific mechanism",
-    "Makes the open pass over the entry points (argument parsing, the main read loop) and the largest source files, up to 10, and lists what it finds as live bugs"
-  ]
+    "Makes the open pass over the entry points (argument parsing, the main read loop) and the largest source files, up to 10, and lists what it finds as live bugs",
+    "Reports at least half of the known_bugs (recall)"
+  ],
+  "known_bugs": {
+    "hexyl": [
+      {
+        "bug": "src/main.rs:301-308 — a hex --block-size returns early: no output, exit 0",
+        "status": "found by the skill run and the baseline, checked by the grader"
+      },
+      {
+        "bug": "src/lib.rs:715,725 — read errors are ignored, so a failing reader can hang or repeat output",
+        "status": "found by the skill run and the baseline, checked by the grader"
+      },
+      {
+        "bug": "PrinterBuilder — num_panels(0) and group_size(0) crash",
+        "status": "found by the skill run and the baseline, checked by the grader"
+      },
+      {
+        "bug": "include mode (-i) can emit identifiers that aren't valid C",
+        "status": "found by the skill run and the baseline, checked by the grader"
+      },
+      {
+        "bug": "--panels has no upper bound, so 8 * panels sizes a huge allocation",
+        "status": "read from code, found by the baseline run (no skill), checked by the grader"
+      },
+      {
+        "bug": "--display-offset is documented as accepting negative values but rejects them",
+        "status": "read from code, found by the baseline run (no skill), checked by the grader"
+      },
+      {
+        "bug": "src/lib.rs:517-523 — offsets of 4 GiB and above print wider than the 8-character border",
+        "status": "read from code, found by the baseline run (no skill), checked by the grader"
+      },
+      {
+        "bug": "src/lib.rs:813,824 — the empty-input frame hard-codes │ and ignores --border",
+        "status": "read from code, found by the baseline run (no skill), checked by the grader"
+      },
+      {
+        "bug": ".github/workflows/CICD.yml:299 — the .deb package description calls hexyl a benchmarking tool",
+        "status": "read from code, found by the skill run, checked by the grader"
+      }
+    ]
+  }
 }

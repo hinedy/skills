@@ -25,7 +25,7 @@
     "mealie": [
       {
         "bug": "frontend/app/pages/admin/manage/households/index.vue:188 (and ~8 sites) — if (!form.validate()) tests a Promise, so invalid forms submit",
-        "status": "verified in clone by the grader"
+        "status": "verified in clone by the grader; also found by the baseline (12 sites)"
       },
       {
         "bug": "Security: client data can outlive a session (G9; details withheld until disclosed)",
@@ -38,6 +38,14 @@
       {
         "bug": "frontend/app/components/global/BaseDialog.vue:146-160 — Enter submits even when submitDisabled",
         "status": "read from code"
+      },
+      {
+        "bug": "Security: a per-user cache outlives sign-out (G9; details withheld until disclosed)",
+        "status": "read from code, found by the baseline run (no skill), checked by the grader"
+      },
+      {
+        "bug": "composables/use-toast.ts:13-34 — one reactive toast, so the generic error overwrites the interceptor's specific one",
+        "status": "read from code, found by the skill re-run, checked by the grader"
       }
     ]
   }

@@ -24,11 +24,19 @@
     "zustand": [
       {
         "bug": "src/middleware/persist.ts:197-207 — with no storage, returns before api.persist is assigned, so store.persist.hasHydrated() throws",
-        "status": "reproduced"
+        "status": "reproduced; also found by the baseline"
       },
       {
         "bug": "src/middleware/persist.ts:317-325 — a throwing migrate with no onRehydrateStorage is swallowed silently",
         "status": "reproduced"
+      },
+      {
+        "bug": "src/middleware/persist.ts:330-339 — setOptions() doesn't bump hydrationVersion, so an in-flight hydration can apply the old key's data",
+        "status": "read from code, found by the baseline run (no skill), checked by the grader"
+      },
+      {
+        "bug": "src/middleware/devtools.ts:313-318 — setStateFromDevtools toggles isRecording without try/finally",
+        "status": "read from code, found by the baseline run (no skill), checked by the grader"
       }
     ]
   }
