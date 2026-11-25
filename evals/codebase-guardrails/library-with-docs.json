@@ -1,0 +1,35 @@
+{
+  "skills": [
+    "codebase-guardrails"
+  ],
+  "query": "Audit this library against the guardrails.",
+  "repos": [
+    {
+      "url": "https://github.com/pmndrs/zustand",
+      "commit": "5d66d53be80363b94491868b41325ea058fd16bb"
+    }
+  ],
+  "files": [],
+  "expected_behavior": [
+    "Marks the published-package and docs parts in the profile",
+    "Applies G26, G27 and G28, and maps wrong doc code and dead links to G28, not polish",
+    "Marks G23 N/A when all text is aimed at developers, with a one-line reason",
+    "Marks consumer-side parts (e.g. servers using the library) as applying, with a reason",
+    "Drops fix-word matches that name a script or tool, version bumps and lint rollouts",
+    "Writes the report to guardrails-audit.md at the repo root and gives the path in chat",
+    "Breaks value ties by higher prevented count, then lower cost, then G before N",
+    "Reports at least half of the known_bugs for its repo (recall; statuses say how sure each bug is, and read-from-code bugs may turn out wrong)"
+  ],
+  "known_bugs": {
+    "zustand": [
+      {
+        "bug": "src/middleware/persist.ts:197-207 — with no storage, returns before api.persist is assigned, so store.persist.hasHydrated() throws",
+        "status": "reproduced"
+      },
+      {
+        "bug": "src/middleware/persist.ts:317-325 — a throwing migrate with no onRehydrateStorage is swallowed silently",
+        "status": "reproduced"
+      }
+    ]
+  }
+}

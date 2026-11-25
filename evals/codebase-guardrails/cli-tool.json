@@ -1,0 +1,39 @@
+{
+  "skills": [
+    "codebase-guardrails"
+  ],
+  "query": "Audit this repo against the guardrails. What keeps breaking, and what would stop it?",
+  "repos": [
+    {
+      "url": "https://github.com/go-task/task",
+      "commit": "afece84bc848db9b9fae3b5a695534655fc22257"
+    }
+  ],
+  "files": [],
+  "expected_behavior": [
+    "Marks G5, G8, G9, G22 and G25 as N/A, each with a one-line reason (terminal prompts aren't dialogs; completions aren't a client)",
+    "Applies G12 to remote fetches, since its Applies when covers external calls, and checks their timeouts",
+    "Applies G27 to the released binaries and G28 to the docs site",
+    "Keeps G16 applicable, since CLI output renders user data",
+    "Checks G4 against the working directory, arguments and environment-variable reads",
+    "Marks each live bug (reproduced) or (read from code)",
+    "Reports classes + one-off + polish + dropped equal to the total",
+    "Reports at least half of the known_bugs for its repo (recall; statuses say how sure each bug is, and read-from-code bugs may turn out wrong)"
+  ],
+  "known_bugs": {
+    "task": [
+      {
+        "bug": "task.go:180-185 — after a required-var prompt, FastCompiledTask empties sh: variables",
+        "status": "reproduced"
+      },
+      {
+        "bug": "internal/execext/exec.go:89-95 with internal/fingerprint/glob.go:18 — globs in paths with an apostrophe match nothing, error dropped",
+        "status": "reproduced"
+      },
+      {
+        "bug": "internal/flags/flags.go:120 — an invalid .taskrc.yml field silently discards the whole config",
+        "status": "reproduced"
+      }
+    ]
+  }
+}

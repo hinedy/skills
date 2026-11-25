@@ -1,0 +1,44 @@
+{
+  "skills": [
+    "codebase-guardrails"
+  ],
+  "query": "Audit the frontend of this repo against the guardrails.",
+  "repos": [
+    {
+      "url": "https://github.com/mealie-recipes/mealie",
+      "commit": "8dbb92808d5a58efe203640198bbadbc00d64dd0"
+    }
+  ],
+  "files": [],
+  "expected_behavior": [
+    "Limits every git log to the frontend path",
+    "Counts real fixes rooted outside the frontend as dropped (out of scope), and still names security fixes",
+    "Writes the report to guardrails-audit.md at the repo root",
+    "Gives G8, G10, G14, G15, G16 and G23 real verdicts with evidence",
+    "Marks guardrails that need a part outside the scope N/A (out of scope)",
+    "Reports classes + one-off + polish + dropped equal to the total, and the class sum equals the classified items",
+    "Maps client-side re-derived permission rules to G22, the guardrail whose Rule names that root cause, not G5",
+    "Marks each live bug (reproduced) or (read from code)",
+    "Reports at least half of the known_bugs for its repo (recall; statuses say how sure each bug is, and read-from-code bugs may turn out wrong)"
+  ],
+  "known_bugs": {
+    "mealie": [
+      {
+        "bug": "frontend/app/pages/admin/manage/households/index.vue:188 (and ~8 sites) — if (!form.validate()) tests a Promise, so invalid forms submit",
+        "status": "verified in clone by the grader"
+      },
+      {
+        "bug": "Security: client data can outlive a session (G9; details withheld until disclosed)",
+        "status": "read from code, found by both runs"
+      },
+      {
+        "bug": "frontend/app/components/Domain/QueryFilterBuilder.vue:167 — toISOString().slice(0,10) saves the previous day east of UTC",
+        "status": "read from code, found by both runs"
+      },
+      {
+        "bug": "frontend/app/components/global/BaseDialog.vue:146-160 — Enter submits even when submitDisabled",
+        "status": "read from code"
+      }
+    ]
+  }
+}

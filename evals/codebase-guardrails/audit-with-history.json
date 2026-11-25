@@ -1,0 +1,76 @@
+{
+  "skills": [
+    "codebase-guardrails"
+  ],
+  "query": "Audit this repo against the guardrails. What keeps breaking, and what would stop it?",
+  "repos": [
+    {
+      "url": "https://github.com/maybe-finance/maybe",
+      "commit": "77b5469832758d1cbee1a940f3012a1ae1c74cd3"
+    },
+    {
+      "url": "https://github.com/healthchecks/healthchecks",
+      "commit": "c1039ad23395162c5e2f17d324d8ccdaa60a1d14"
+    }
+  ],
+  "files": [],
+  "expected_behavior": [
+    "Chooses Audit mode and writes the report to guardrails-audit.md at the repo root, or a dated file beside an existing one, and gives the path in chat",
+    "Runs the fix-commit grep, capped at 300, counts sweeps once, and reports classes + one-off + polish + dropped equal to the total",
+    "Groups fixes by root cause, not by feature",
+    "Gives every applicable guardrail a verdict with path:line, a grep count or a config line as evidence",
+    "Rates a guardrail Met only when lint, the type checker, CI or the code's structure enforces it everywhere (or it is a decision guardrail followed everywhere); followed-but-unenforced is Convention, and Missing when violations outnumber compliant sites",
+    "Gives a signal only to raised guardrails with no history that are not Met; every other zero-history row shows — and a value of 0",
+    "Every ranked row's value equals (prevented or signal) x fit weight / cost, ties broken by higher prevented, then lower cost, then G before N",
+    "Follows REPORT-TEMPLATE.md section order: Live bugs (security first) and Top three changes right after the Ranked table, then Details, N/A and New guardrails",
+    "Sorts Met rows after every other verdict and takes the top three changes only from rows that are not Met",
+    "Does not edit GUARDRAILS.md",
+    "Reports at least half of the known_bugs for its repo (recall; statuses say how sure each bug is, and read-from-code bugs may turn out wrong)"
+  ],
+  "known_bugs": {
+    "maybe": [
+      {
+        "bug": "Security: XSS in rendered user content (G29; details withheld until disclosed)",
+        "status": "read from code, found by both runs"
+      },
+      {
+        "bug": "Security: request input reaches dynamic class lookup without an allowlist (G4; details withheld until disclosed)",
+        "status": "read from code, found by both runs"
+      },
+      {
+        "bug": "Security: a settings action is missing its authorization check (G5; details withheld until disclosed)",
+        "status": "verified in clone by the grader"
+      },
+      {
+        "bug": "app/models/plaid_entry/processor.rb:15-19 — Plaid sync overwrites locked amount/date edited through the API",
+        "status": "verified in clone by the grader"
+      },
+      {
+        "bug": "Security: XSS in a client-side component (G29; details withheld until disclosed)",
+        "status": "read from code"
+      },
+      {
+        "bug": "Security: session handling after a credential change (G9; details withheld until disclosed)",
+        "status": "read from code"
+      }
+    ],
+    "healthchecks": [
+      {
+        "bug": "hc/lib/curl.py:64 — no default timeout; callers that pass none can hang a worker",
+        "status": "read from code, found by both runs"
+      },
+      {
+        "bug": "hc/front/views.py:1307 — channel rename does a full save that can re-enable a disabled channel",
+        "status": "read from code"
+      },
+      {
+        "bug": "hc/front/views.py:202 — daily profile.save() can undo next_report_date/next_nag_date set by sendreports",
+        "status": "read from code"
+      },
+      {
+        "bug": "Security: a lost-update race on security-relevant counters (G30; details withheld until disclosed)",
+        "status": "read from code"
+      }
+    ]
+  }
+}

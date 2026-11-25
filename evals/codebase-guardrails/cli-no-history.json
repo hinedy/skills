@@ -1,0 +1,15 @@
+{
+  "skills": ["codebase-guardrails"],
+  "query": "Where does this CLI stand against the guardrails?",
+  "repos": [
+    { "url": "https://github.com/sharkdp/hexyl", "commit": "6ecc29b9c8c84d08a7e860f7f69c22b113b480ea", "clone": "git init hexyl && cd hexyl && git fetch --depth 1 https://github.com/sharkdp/hexyl 6ecc29b9c8c84d08a7e860f7f69c22b113b480ea && git checkout FETCH_HEAD (one commit, so no usable fix history)" }
+  ],
+  "files": [],
+  "expected_behavior": [
+    "Marks G5, G8, G9, G10, G14, G15, G21, G22, G24 and G25 as N/A, each with a one-line reason",
+    "Keeps G16 applicable, since CLIs render user data",
+    "With fewer than 20 fix commits and no issue tracker, uses each guardrail's Code line as evidence and says so",
+    "Checks G4 against argv and environment-variable reads",
+    "Does not recommend any UI-specific mechanism"
+  ]
+}

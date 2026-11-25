@@ -1,0 +1,18 @@
+{
+  "skills": [
+    "codebase-guardrails"
+  ],
+  "query": "We're starting a new multi-tenant SaaS with a web UI and a REST API, launching in English and Arabic next year, with roles each customer can edit. Which guardrails should we decide now?",
+  "files": [],
+  "expected_behavior": [
+    "Chooses Plan mode and answers in chat without writing a file",
+    "Skips evidence gathering because there is no code or history, and says so",
+    "Ranks by fit weight / cost alone",
+    "Raises G23 (Arabic is right-to-left), G24 and G5 because the roadmap reaches their triggers",
+    "Does not raise G25, since no customer needs different behavior yet",
+    "Recommends the lightest version of each guardrail and names the traps to avoid",
+    "Omits verdicts (the Scoreboard and the Verdict column), the Evidence header line, and Evidence, Gap and Live bugs parts",
+    "Ranks the Required rows (G5 and G22, since customers edit roles) above every other row",
+    "Adds a new guardrail for a roadmap risk the catalog lacks (e.g. tenant data isolation), citing the roadmap line"
+  ]
+}
