@@ -88,7 +88,19 @@ Does code implement the rule anywhere?
 ```
 
 Every verdict cites evidence: `path:line`, a grep count or a config line. A verdict without evidence is a guess; go look. Before writing a gap, confirm the current state isn't the framework's default or its recommended pattern. Then state the **gap**: the smallest change that closes the class. If only a trap would reach Met, say so and keep the verdict.
-**Done when** every guardrail has a verdict, evidence and a gap (or "none").
+
+Then make the **open pass**: read for bugs the catalog doesn't name. With history, read the 10 source files most touched by step 2's fix commits, skipping any manifest (`package.json`, `go.mod`) the filter leaves in; for a scoped audit, add `-- <path>` to both git commands:
+
+```
+git log --no-merges --format='%h %s' | grep -iwE '(fix|fixes|fixed|hotfix|revert|bug)' | head -300 | cut -d' ' -f1 \
+  | xargs git show --name-only --format= | sed '/^$/d' \
+  | grep -viE '(^|/)(tests?|spec|__tests__|docs?)/|[._-](test|spec)s?\.|(^|/)test_|changelog|\.(md|mdx|lock|snap)$|-lock\.|\.sum$' \
+  | sort | uniq -c | sort -rn | head -10
+```
+
+With no history, read the entry points (argument parsing, request handlers, the main read loop) plus the largest source files, up to 10 in all. Report each bug found under Live bugs, with its guardrail ID or "(outside catalog)".
+Why: the catalog finds what its Check lines measure, and a plain read finds bugs no catalog entry names.
+**Done when** every guardrail has a verdict, evidence and a gap (or "none"), and every file in the open pass has been read.
 
 ## 6. Report
 

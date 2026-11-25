@@ -26,6 +26,7 @@
     "Sorts Met rows after every other verdict and takes the top three changes only from rows that are not Met",
     "Does not edit GUARDRAILS.md",
     "Reports at least half of the known_bugs for its repo (recall; statuses say how sure each bug is, and read-from-code bugs may turn out wrong)",
+    "Makes the open pass over the 10 files most touched by fix commits, and marks bugs no guardrail covers \"(outside catalog)\"",
     "Gives severity ×2 to classes with a security, data-loss or wrong-number fix, and ×0.5 only to classes of layout, styling, copy or docs text"
   ],
   "known_bugs": {

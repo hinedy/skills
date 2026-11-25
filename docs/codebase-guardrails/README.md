@@ -34,7 +34,7 @@ Both end with a ranked table:
 
 **Prevented** counts past fixes the guardrail would have stopped, and **Recent** counts those from the newest third of the history, so a class still landing outranks one that stopped. **Severity** doubles a class with security, data-loss or wrong-number bugs and halves one that is only cosmetic. **Signal** counts files showing the guardrail's warning signs, only for guardrails the roadmap raises and that have no history yet; it's capped so it can't outrank real recurring bugs. **N1** is a guardrail the skill wrote because no catalog entry covered that class.
 
-The ranked changes repeat from run to run; the live bugs are a sample. In testing, two runs on the same repo shared about 1 in 6 of the bugs they found, so re-run or re-check before treating the list as complete.
+Besides the catalog checks, an audit reads the files that break most (or, with no history, the entry points) for bugs no guardrail names, and lists them as "outside catalog". The ranked changes repeat from run to run; the live bugs are a sample. In testing, two runs on the same repo shared about 1 in 6 of the bugs they found, so re-run or re-check before treating the list as complete.
 
 Right after the table come the live bugs it found (security bugs first) and the top three changes, then the details for each guardrail, any new guardrails, the heavy versions to avoid, one-off bugs (security fixes named) and the count of polish fixes no architecture would have prevented. Guardrails already rated Met sort to the bottom. See the full [sample audit](sample-audit.md).
 

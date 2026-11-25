@@ -16,6 +16,7 @@
     "Keeps G16 applicable, since CLIs render user data",
     "With fewer than 20 fix commits and no issue tracker, uses each guardrail's Code line as evidence and says so",
     "Checks G4 against argv and environment-variable reads",
-    "Does not recommend any UI-specific mechanism"
+    "Does not recommend any UI-specific mechanism",
+    "Makes the open pass over the entry points (argument parsing, the main read loop) and the largest source files, up to 10, and lists what it finds as live bugs"
   ]
 }

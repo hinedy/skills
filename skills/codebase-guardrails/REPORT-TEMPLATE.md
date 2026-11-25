@@ -13,6 +13,7 @@ Contents: [Scoring rules](#scoring-rules) · [Plan mode](#plan-mode) · [Self-ch
 - **Sort** Met rows after every other verdict; their value stays visible as history but they are not work. Within each group, sort by value; break ties by higher prevented + recent, then lower cost, then catalog IDs (G) before new ones (N), then number.
 - **Top three changes** come only from rows that aren't Met.
 - **Live bugs come first.** They are listed before the top three changes, security bugs first, whatever their guardrail's rank. Why: rank measures how often a class recurred; a live bug is what to fix today.
+- **Outside-catalog bugs** (from step 5's open pass) are live bugs marked "(outside catalog)" where the guardrail ID would go. They add nothing to prevented counts or verdicts.
 - **New guardrails** (N1, N2, …) count in the scoreboard, the ranked table and the class sum.
 
 ## Plan mode
@@ -32,6 +33,7 @@ Plan mode reports in chat and uses the structure below with these changes:
 - Check each row's cost against its guardrail's Cost line, and each value against count, recent, weight, severity and cost.
 - Check that "Classes: … in <K> classes across <rows> guardrails" matches the rows that have a prevented count.
 - Check that no Met or Convention row has a live bug or a violating site named anywhere in the report.
+- Check that every live bug carries a guardrail ID or "(outside catalog)".
 
 ## Structure
 
@@ -42,7 +44,7 @@ ALWAYS use this structure, in this order. Replace every `<…>`. Plan mode chang
 
 **Stack:** <languages, frameworks, store>. **Parts:** <UI, server, package, docs, …; roles; customers; locales>.
 **Roadmap:** <what's coming that changes fit, or "none found">.
-**Evidence:** <source used; say if an issue tracker was unreachable>. <N> items (sweeps counted once), <first date> to <last date>: <C> in <K> classes, <O> one-off, <P> polish, <D> dropped<, of them <d> real fixes outside the scope — scoped audits only>. Recent: since <cut-off date>. <s> of the <C> class items were mapped from subject and file list alone, without reading the diff; <r> diffs read.
+**Evidence:** <source used; say if an issue tracker was unreachable>. <N> items (sweeps counted once), <first date> to <last date>: <C> in <K> classes, <O> one-off, <P> polish, <D> dropped<, of them <d> real fixes outside the scope — scoped audits only>. Recent: since <cut-off date>. <s> of the <C> class items were mapped from subject and file list alone, without reading the diff; <r> diffs read. Open pass: <f> files read.
 
 **Scoreboard:** <n> met · <n> convention · <n> partial · <n> missing · <n> N/A (new guardrails included)
 
@@ -60,7 +62,7 @@ Classes: <prevented counts summed> = <C from Evidence>, in <K> classes across <r
 
 ## Live bugs
 
-- `<path:line>`: <what goes wrong> (G<n>). <(reproduced) or (read from code)>. Security bugs first.
+- `<path:line>`: <what goes wrong> (G<n> or outside catalog). <(reproduced) or (read from code)>. Security bugs first.
 - From the earlier report, when one exists: `<path:line>`: <bug> — <still present / fixed / wrong>, with the evidence.
 
 ## Top three changes

@@ -4,7 +4,7 @@
 
 **Stack:** TypeScript, React + TanStack Query web client, Node/Express API, Postgres. **Parts:** UI, server, store; three roles; one customer region; English only.
 **Roadmap:** a public API for accounting integrations next quarter; an EU region with a German UI after that.
-**Evidence:** fix commits. 120 items (sweeps counted once), 2024-03-04 to 2026-02-27: 58 in 10 classes, 5 one-off, 36 polish, 21 dropped (e.g. "add bug report template", "rename fix-up script"). Recent: since 2025-06-30. 31 of the 58 class items were mapped from subject and file list alone, without reading the diff; 24 diffs read.
+**Evidence:** fix commits. 120 items (sweeps counted once), 2024-03-04 to 2026-02-27: 58 in 10 classes, 5 one-off, 36 polish, 21 dropped (e.g. "add bug report template", "rename fix-up script"). Recent: since 2025-06-30. 31 of the 58 class items were mapped from subject and file list alone, without reading the diff; 24 diffs read. Open pass: 10 files read.
 
 **Scoreboard:** 1 met · 0 convention · 7 partial · 4 missing (N1 included) · 1 N/A
 
@@ -34,6 +34,7 @@ Classes: 6 + 12 + 9 + 7 + 2 + 4 + 5 + 3 + 6 + 4 = 58, in 10 classes across 10 gu
 
 - `api/src/lib/http.ts:9`: no timeout on outbound calls; one slow provider hangs requests (G12). (read from code)
 - `web/src/features/invoices/hooks/use-invoice.ts:22`: a caller's `enabled: true` fires the query with an empty id (G3). (reproduced)
+- `api/src/routes/invoices.ts:73`: deleting a line item doesn't recompute the invoice total until the next edit (outside catalog). (read from code)
 
 ## Top three changes
 
